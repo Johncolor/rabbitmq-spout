@@ -1,22 +1,17 @@
 name: rabbitmq_test
 
-#workers: 3
 
 topology:
 
    - spout:
-       name: float_data_spout
-       module: test_rabbitmq.float_data_spout
+       name: rabbitmq_spout
+       module: test_rabbitmq.rabbitmq_spout
        parallelism_hint: 1
 
-#   - spout:
-#       name: text_data_spout
-#       module: mt_item_topology.text_data_spout
-#       parallelism_hint: 3
 
    - bolt:
        name: log_result
        module: test_rabbitmq.write_log
        parallelism_hint: 1
        groupings:
-           - shuffle_grouping: float_data_spout
+           - shuffle_grouping: rabbitmq_spout
